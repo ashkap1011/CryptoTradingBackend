@@ -8,6 +8,7 @@ import helmet from "helmet";
 import * as dotenv from "dotenv";
 import * as pug from 'pug';
 import {connectDB} from './config/db';
+import {userRoutes} from './routes/user'
 import {router} from './routes/index'
 
 /**
@@ -46,8 +47,10 @@ const server = app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
   });
 
-//routing
+//Routes
 app.use('/', router)
+app.use('/user',userRoutes)
+
 
 //TODOOOO
 //PUT .ENV IN GITIGNORE.
