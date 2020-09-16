@@ -1,13 +1,8 @@
 import mongoose, { Schema } from "mongoose"
 
 const UserSchema:Schema = new Schema({
-    name: {
+    username: {
         type:String,
-        required: true,
-        trim: true,
-    },
-    email: {
-        type: String,
         required: true,
         trim: true,
         unique: true,
@@ -19,4 +14,10 @@ const UserSchema:Schema = new Schema({
     },
 })
 
-export default mongoose.model('User', UserSchema)
+interface UserDoc extends mongoose.Document {
+    username: String,
+    password: String
+}
+
+
+export default mongoose.model<UserDoc>('User', UserSchema)

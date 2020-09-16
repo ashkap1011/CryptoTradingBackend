@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
 
 
 
-//routes for getting data of trades 
+//routes for getting data of trades    
 
 
 
