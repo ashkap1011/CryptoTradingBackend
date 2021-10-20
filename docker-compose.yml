@@ -1,0 +1,28 @@
+version: "3"
+services: 
+  api-server:
+    build: .
+    env_file: ./build/config/.env
+    ports: 
+      - "3000:3000"
+    networks:
+      - cryptotrading-app
+    depends_on: 
+      - mongo
+  mongo:
+    image: mongo:3.6-xenial    
+    environment: 
+      - MONGO_INITDB_DATABASE=cryptoapp
+    ports: 
+      - "27017:27017"
+    networks:
+      - cryptotrading-app
+    volumes: 
+      - mongo-data:/data/db
+networks: 
+  cryptotrading-app:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver:  local

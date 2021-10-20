@@ -1,0 +1,7 @@
+build
+npm-debug.log
+src/config/.env
+.DS_Store
+*key.json
+node_modules/
+.terraform/

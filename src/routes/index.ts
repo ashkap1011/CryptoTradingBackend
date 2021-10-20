@@ -1,11 +1,16 @@
 import express from "express"
 
+
 const router = express.Router()
 
-router.get('/', function (req, res) {
-    res.render('index', { title: 'Hey', message: 'Hello there!' })
+router.get('/marketChart/:tradingPair', (req, res) => {
+    const pair = {pair: req.params.tradingPair};
+    res.render('marketchart', { tradingPair: JSON.stringify(pair)})
 })
 
+router.get('/', (req, res) =>{
+    res.render('index')
+})
 
 
 

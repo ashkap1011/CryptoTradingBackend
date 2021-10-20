@@ -3,56 +3,72 @@ import mongoose, {Schema} from "mongoose"
 const WalletItemSchema:Schema = new Schema({
     symbol:{
         type: String,
-        unique:true,
-        required: true
+    },
+    quantity:{             //available quantity for placing orders
+        type: Number,
+    },
+
+    lockedQuantity:{        //quantity locked on placement of orders 
+        type: Number,
+        default: 0,
+    }
+})
+
+const CryptoEquitySchema: Schema = new Schema({
+    symbol:{
+        type: String,
     },
     quantity:{
         type: Number,
-        required: true
-    },
+    }
 })
 
-const WalletSchema:Schema = new Schema({
+const ExecutedOrderSchema: Schema = new Schema({
+    cryptoEquity: {
+        type: CryptoEquitySchema,
+    },
+
+    isBuy: {
+        type: Boolean
+    },
+
+})
+
+const UserAccountSchema:Schema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
     },
     wallet: {
-        type:[WalletItemSchema],    //Array of JSON objects where each one represents a crypto key
-        trim: true,
+        type:[WalletItemSchema],    //Array of JSON objects where each one represents a cryptocurrency and locked crypto
     },
-    //trading history i.e. all executed orders completely
-    /***
-     * isbuy/issell, symbol, quantity, isprofit, percentage to 2 dp, btc gained/loss
-     * 
-     */
-
-     //active orders
-     /***
-      * isbuy/issell, symbol, quantity, initial price, 
-      *  
-      */
+    executedOrders: {               
+        type:[ExecutedOrderSchema]
+    }
 
 })
 
-
-const ParentSchema = new Schema({
-    fromParent: Boolean
-  });
-  
-  const ChildSchema = new Schema({
-    ...ParentSchema.obj,
-    fromChild: Boolean // new properties come up here
-  });
-
 export interface WalletItem {
     symbol: String,
-    quantity: number
+    quantity: number,
+    lockedQuantity: number,
 }
 
-interface WalletDoc extends mongoose.Document {
-    userId: Schema.Types.ObjectId,
+export interface CryptoEquity {
+    symbol:String,
+    quantity:number,
+}
+
+export interface ExecutedOrder {
+    cryptoEquity: CryptoEquity,
+    isBuy: boolean,
+}
+
+
+interface UserAccountDoc extends mongoose.Document {
+    userId: Schema.Types.ObjectId
     wallet: [WalletItem]
+    executedOrders: [ExecutedOrder]
 }
 
 
-export default mongoose.model<WalletDoc>('Wallet', WalletSchema)
+export default mongoose.model<UserAccountDoc>('UserAccount', UserAccountSchema)
