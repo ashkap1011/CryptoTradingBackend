@@ -5,7 +5,7 @@
   "main": "build/app.js",
   "scripts": {
     "start": "NODE_PATH=./build node build/app.js",
-    "build": "tsc -p . && cp -r ./src/views build && cp -r ./src/config/.env build/config",
+    "build": "tsc -p . && cp -r ./src/views build",
     "dev": "nodemon src/app.ts"
   },
   "keywords": [],

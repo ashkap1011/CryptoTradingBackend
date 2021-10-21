@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-
+const mongo_uri =  "mongodb://mongo:27017/cryptoapp"
 const connectDB = async () => {
     try{
-        const conn = await mongoose.connect(process.env.MONGO_URI as string,{
+        const conn = await mongoose.connect(mongo_uri as string,{
             useNewUrlParser:true,
             useUnifiedTopology:true,
             useFindAndModify:false
